@@ -12,14 +12,30 @@ KERNELS_BUILD="$DIR/kokkos"
 NVCC_WRAPPER=`readlink -f "${KOKKOS_SRC}/bin/nvcc_wrapper"`
 
 if [[ "$NERSC_HOST" == perlmutter ]]; then
-    # compiler segfault with gcc/10.3.0
-
-    echo \$NERSC_HOST matched perlmutter
-
+    echo "$NERSC_HOST" matched perlmutter
+    
+    echo "export CUDAARCHS=80"
     export CUDAARCHS="80" # for cmake 3.20+
-    module load cuda/11.3.0
-    module load cmake/3.20.5
-    module load gcc/9.3.0
+    echo "export MPICH_GPU_SUPPORT_ENABLED=1"
+    export MPICH_GPU_SUPPORT_ENABLED=1
+    echo "export CRAY_ACCEL_TARGET=nvidia80"
+    export CRAY_ACCEL_TARGET=nvidia80
+
+    export NVCC_WRAPPER_DEFAULT_COMPILER=CC
+    export TPETRA_USE_TEUCHOS_TIMERS=1
+    export TPETRA_ASSUME_CUDA_AWARE_MPI=1
+    export KOKKOSP_SO="$SCRIPTPATH/kokkos-tools/profiling/nvtx-connector/kp_nvtx_connector.so"
+
+    echo "$KOKKOSP_SO"
+
+    echo module load PrgEnv-gnu
+    module load PrgEnv-gnu
+    echo module load cmake/3.22.0
+    module load cmake/3.22.0
+    echo module load cudatoolkit
+    module load cudatoolkit
+    echo module load cpe-cuda
+    module load cpe-cuda
 
     which cmake
     which gcc
