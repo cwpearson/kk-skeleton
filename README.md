@@ -1,9 +1,11 @@
 # kk-skeleton
 Skeleton for building Kokkos and Kokkos Kernels 
 
-1. Check out the needed `kokkos`
-2. Check out the needed `kokkos-kernels`
-3. Source `load-env.sh` if on a supported system
+
+1. `git submodule update --init`
+2. Check out the needed `kokkos`
+3. Check out the needed `kokkos-kernels`
+4. Source `load-env.sh` if on a supported system
 
 ## Example Builds
 
